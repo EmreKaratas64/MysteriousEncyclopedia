@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+@await Html.PartialAsync("~/Views/Home/HomeHeaderPartialView.cshtml")
+@* <i class="fa fa-info mr-2"></i> *@
+<body>
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-light pt-3 d-none d-lg-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 text-center text-lg-left mb-2 mb-lg-0">
+                    <div class="d-inline-flex align-items-center">
+                        <p><img src="~/HomeTheme/img/School.png" class="mr-2" style="height:18px">Mysterious Encyclopedia</p>
+                        <p class="text-body px-3">|</p>
+                        <p><i class="fa fa-envelope mr-2"></i>Support:&nbsp; </p>
+                        <p>info@mysteriousencyclopedia.com</p>
+                    </div>
+                </div>
+                @* <div class="col-lg-4 text-center text-lg-right">
+                    <div class="d-inline-flex align-items-center">
+                        <a class="text-primary px-3" href="">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a class="text-primary px-3" href="">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a class="text-primary px-3" href="">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a class="text-primary px-3" href="">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a class="text-primary pl-3" href="">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div> *@
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    @await Html.PartialAsync("~/Views/Home/HomeNavbarPartialView.cshtml")
+
+    @RenderBody()
+
+    @await Html.PartialAsync("~/Views/Home/HomeFooterPartialView.cshtml")
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+    @await Html.PartialAsync("~/Views/Home/HomeScriptsPartialView.cshtml")
+   
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

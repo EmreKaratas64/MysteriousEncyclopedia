@@ -1,0 +1,29 @@
+﻿@model ResultTopicDto
+@{
+    ViewData["Title"] = "Add New Topic";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">New Topic Form</h4>
+                <form method="post" class="forms-sample">
+                    <div class="form-group">
+                        <input type="text" asp-for="TopicName" class=" form-control my-4" placeholder="Topic title">
+                        <span class="text-danger" asp-validation-for="@Model.TopicName"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" asp-for="TopicImage" class=" form-control my-4" placeholder="Topic image">
+                        <span class="text-danger" asp-validation-for="@Model.TopicImage"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-rounded me-2">Add</button>
+                    <a href="/Topic/TopicList/" class="btn btn-dark btn-rounded">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

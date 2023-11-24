@@ -1,0 +1,52 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+@model IPagedList<MysteriousEventDto>
+@{
+    ViewData["Title"] = "Mysterious Events";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .btn-primary a {
+        color: white;
+    }
+</style>
+
+<div class="row w-100 flex-grow">
+    
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 grid-margin stretch-card">
+            <div class="card shadow" style="border-radius:12px">
+                <img class="card-img-top" src="@item.EventImage" alt="Card image cap" style="height:350px; border-radius:12px">
+                <div class="card-body">
+                    <p class="card-title">@item.EventTitle</p>
+                    <p class="text-muted">@item.EventLocation</p>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <div class="d-flex traffic-status">
+                                @{
+                                    List<string> topicsList = new List<string>(item.EventTopics.Split(","));
+                                }
+                                @foreach (var topic in topicsList)
+                                {
+                                    <span class="badge badge-pill badge-light bg-dark mb-3">@topic</span>
+                                }
+                            </div>
+                        </div>
+                        <p>@item.EventModifiedDate.ToString("dd-MM-yyyy hh:mm")</p>
+                        <a href="/MysteriousEvent/MysteriousEventUpdate/@item.EventID" class="btn btn-info btn-rounded btn-sm"><i class="mdi mdi-tooltip-edit"></i>&nbsp; Edit</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("MysteriousEventList", new { page }), new PagedListRenderOptions
+{
+    UlElementClasses = new List<string> { "btn-group", "pb-2", "pb-lg-0" },
+    LiElementClasses = new List<string> { "btn", "btn-primary" }
+})
+</div>
+

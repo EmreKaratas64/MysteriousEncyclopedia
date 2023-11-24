@@ -1,0 +1,25 @@
+﻿@model List<ResultTopicDto>
+
+<div class="container-fluid py-5">
+    <div class="container pt-5 pb-3">
+        <div class="text-center mb-3 pb-3">
+            <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Topics</h6>
+            <h1>See events by topics</h1>
+        </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="destination-item position-relative overflow-hidden mb-2">
+                        <img class="img-fluid" src="@item.TopicImage" alt="">
+                        <a class="destination-overlay text-white text-decoration-none" href="/Home/HomeMysteriousEventsByTopic?topic=@item.TopicName">
+                            <h5 class="text-white">@item.TopicName</h5>
+@*                             <span>100 Cities</span> *@
+                        </a>
+                    </div>
+                </div>
+            } 
+           
+        </div>
+    </div>
+</div>

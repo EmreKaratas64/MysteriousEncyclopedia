@@ -1,0 +1,58 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Spica Admin</title>
+    <link rel="stylesheet" href="~/AdminTheme/template/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/AdminTheme/template/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="~/AdminTheme/template/css/style.css">
+    <link rel="shortcut icon" href="~/AdminTheme/template/images/favicon.png" />
+    <script src="https://cdn.tiny.cloud/1/ao5ajp544od03ibdmuq9q6lcc8k9bf9ju4unro064aj5ygv1/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#tiny',
+                    plugins: [
+                'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
+                'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
+                'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify |' +
+                'bullist numlist checklist outdent indent | removeformat | code table help'
+        })
+    </script>
+</head>
+
+<body>
+    <div class="container-scroller d-flex">
+
+        @await Html.PartialAsync("~/Views/AdminLayouts/AdminSidebarPartialView.cshtml")
+
+        <div class="container-fluid page-body-wrapper">
+
+            @await Html.PartialAsync("~/Views/AdminLayouts/AdminTopNavbarPartialView.cshtml")
+
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    @RenderBody()
+                </div>
+
+                @await Html.PartialAsync("~/Views/AdminLayouts/AdminFooterPartialView.cshtml")
+                
+            </div>
+        </div>
+
+    </div>
+    <script src="~/AdminTheme/template/vendors/js/vendor.bundle.base.js"></script>
+    <script src="~/AdminTheme/template/js/off-canvas.js"></script>
+    <script src="~/AdminTheme/template/js/hoverable-collapse.js"></script>
+    <script src="~/AdminTheme/template/js/template.js"></script>
+</body>
+
+</html>

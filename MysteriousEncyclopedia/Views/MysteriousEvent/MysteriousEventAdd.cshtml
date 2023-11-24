@@ -1,0 +1,63 @@
+﻿@model MysteriousEventDto
+@{
+    ViewData["Title"] = "Add New Mysterious Event";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">New Mysterious Event</h4>
+                <form method="post" class="forms-sample">
+                    <div class="form-group">
+                        <input type="text" asp-for="EventTitle" class="form-control my-4" placeholder="Event title">
+                        <span class="text-danger" asp-validation-for="@Model.EventTitle"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" asp-for="EventImage" class="form-control my-4" placeholder="Event image">
+                        <span class="text-danger" asp-validation-for="@Model.EventImage"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" asp-for="EventTopics" class="form-control my-4" placeholder="Event topics (please separate topics by comma!)">
+                        <span class="text-danger" asp-validation-for="@Model.EventTopics"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" asp-for="EventDate" class="form-control my-4" placeholder="Event date">
+                        <span class="text-danger" asp-validation-for="@Model.EventDate"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" asp-for="EventLocation" class="form-control my-4" placeholder="Event location">
+                        <span class="text-danger" asp-validation-for="@Model.EventLocation"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea id="tiny" type="text" asp-for="EventContent" class="form-control my-4" placeholder="Event content" rows="10"></textarea>
+                        <span class="text-danger" asp-validation-for="@Model.EventContent"></span>
+                    </div>
+                    <div class="form-check form-check-success">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" asp-for="EventStatus">
+                            Is event solved?
+                        </label>
+                    </div>
+                    <div class="form-check form-check-success">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" asp-for="EventVisible">
+                            Visible
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-rounded me-2">Add</button>
+                    <a href="/MysteriousEvent/MysteriousEventList/" class="btn btn-dark btn-rounded">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+

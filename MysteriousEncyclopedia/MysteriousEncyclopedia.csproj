@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<!--<PublishTrimmed>true</PublishTrimmed>-->
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Dapper" Version="2.1.15" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.2" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
+		<PackageReference Include="X.PagedList" Version="8.4.7" />
+		<PackageReference Include="X.PagedList.Mvc.Core" Version="8.4.7" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="wwwroot\AdminTheme\.DS_Store" />
+	  <None Include="wwwroot\AdminTheme\template\.DS_Store" />
+	  <None Include="wwwroot\AdminTheme\template\css\.DS_Store" />
+	  <None Include="wwwroot\AdminTheme\template\fonts\.DS_Store" />
+	  <None Include="wwwroot\AdminTheme\template\fonts\Roboto\.DS_Store" />
+	  <None Include="wwwroot\AdminTheme\template\images\.DS_Store" />
+	  <None Include="wwwroot\AdminTheme\template\images\auth\.DS_Store" />
+	  <None Include="wwwroot\AdminTheme\template\images\faces\.DS_Store" />
+	  <None Include="wwwroot\AdminTheme\template\js\.DS_Store" />
+	  <None Include="wwwroot\AdminTheme\template\pages\.DS_Store" />
+	  <None Include="wwwroot\AdminTheme\template\scss\.DS_Store" />
+	  <None Include="wwwroot\AdminTheme\template\scss\components\.DS_Store" />
+	  <None Include="wwwroot\AdminTheme\template\vendors\.DS_Store" />
+	</ItemGroup>
+
+</Project>

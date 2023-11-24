@@ -1,0 +1,20 @@
+﻿@model List<Tuple<string, int>>
+
+<div class="mb-5">
+    <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Topics</h4>
+    <div class="bg-white" style="padding: 30px;">
+        <ul class="list-inline m-0">
+            @foreach (var item in Model)
+            {
+                <li class="mb-3 d-flex justify-content-between align-items-center">
+                    <a class="text-dark" href="/Home/HomeMysteriousEventsByTopic?topic=@item.Item1">
+                        <i class="fa fa-angle-right text-primary mr-2"></i>@item.Item1
+                    </a>
+                    <span class="badge badge-primary badge-pill">@item.Item2</span>
+                </li>
+            }
+          
+
+        </ul>
+    </div>
+</div>
