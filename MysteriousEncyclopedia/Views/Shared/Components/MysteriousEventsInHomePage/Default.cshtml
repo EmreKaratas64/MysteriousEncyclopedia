@@ -18,7 +18,7 @@
                             </div>
                         </div>
                         <div class="bg-white p-4">
-                            <div class="d-flex mb-2">
+                           @*  <div class="d-flex mb-2">
                                 @{
                                     List<string> topicsList = new List<string>(item.EventTopics.Split(","));
                                 }
@@ -27,7 +27,7 @@
                                     <a class="text-primary text-uppercase text-decoration-none" href="/Home/HomeMysteriousEventsByTopic?topic=@topic">@topic</a>
                                     <span class="text-primary px-2">|</span>
                                 }
-                            </div>
+                            </div> *@
                             <a class="h5 m-0 text-decoration-none" href="/Home/HomeMysteriousEventDetail/@item.EventID">@item.EventTitle</a>
                         </div>
                     </div>

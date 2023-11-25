@@ -4,6 +4,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!-- Header Start -->
+<div class="container-fluid page-header">
+    <div class="container">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
+            <h3 class="display-4 text-white text-uppercase">Event Detail</h3>
+            <div class="d-inline-flex text-white">
+                <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
+                <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                <p class="m-0 text-uppercase">Event Detail</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+
 <!-- Blog Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">
@@ -20,7 +35,7 @@
                         </div>
                     </div>
                     <div class="bg-white mb-3" style="padding: 30px;">
-                        <div class="d-flex mb-3">
+                       @*  <div class="d-flex mb-3">
                             @{
                                 List<string> topicsList = new List<string>(Model.EventTopics.Split(","));
                             }
@@ -29,7 +44,7 @@
                                 <span class="text-primary px-2">|</span>
                                 <a class="text-primary text-uppercase text-decoration-none" href="/Home/HomeMysteriousEventsByTopic?topic=@topic">@topic</a>
                             }
-                        </div>
+                        </div> *@
                         @Html.Raw(Model.EventContent)
                     </div>
                 </div>

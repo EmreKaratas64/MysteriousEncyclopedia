@@ -3,10 +3,10 @@
     <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Last Added Events</h4>
     @foreach (var item in Model)
     {
-        <a class="d-flex align-items-center text-decoration-none bg-white mb-3" href="/Home/HomeMysteriousEventDetail/@item.EventID">
-            @* <img class="img-top" src="@item.EventImage" alt="" style="height:100px"> *@
-            <div class="pl-5">
-                <h6 class="m-1">@item.EventTitle</h6>
+        <a class="d-flex align-items-center text-decoration-none bg-white mb-3" href="/Home/HomeMysteriousEventDetail/@item.EventID" style="border-radius:20px;">
+            <img class="img-top" src="@item.EventImage" alt="" style="height:100px;border-radius:20px">
+            <div class="pl-3">
+                <h6 class="my-1 mr-3">@item.EventTitle</h6>
                 <small>@item.EventModifiedDate.ToString("dd-MM-yyyy")</small>
             </div>
         </a>
