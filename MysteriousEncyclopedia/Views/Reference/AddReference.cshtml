@@ -1,0 +1,33 @@
+﻿@model ReferencesDto
+@{
+    ViewData["Title"] = "AddReference";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">New Reference Form</h4>
+                <form method="post" class="forms-sample">
+                    <div class="form-group">
+                        <input type="text" asp-for="ReferenceTitle" class=" form-control my-4" placeholder="Reference title">
+                        <span class="text-danger" asp-validation-for="@Model.ReferenceTitle"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" asp-for="ReferenceUrl" class=" form-control my-4" placeholder="Reference url">
+                        <span class="text-danger" asp-validation-for="@Model.ReferenceUrl"></span>
+                    </div>
+                    <div class="form-group">
+                        <textarea asp-for="ReferenceDescription" rows="5" class="form-control my-4" placeholder="Reference description"></textarea>
+                        <span class="text-danger" asp-validation-for="@Model.ReferenceDescription"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-rounded me-2">Add</button>
+                    <a href="/Reference/ReferencesList/" class="btn btn-dark btn-rounded">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

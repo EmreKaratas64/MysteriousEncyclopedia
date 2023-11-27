@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using MysteriousEncyclopedia.Models.DapperContext;
+using MysteriousEncyclopedia.Models.DTOs.ReferenceDto;
 using MysteriousEncyclopedia.Models.DTOs.ResourceDto;
 using MysteriousEncyclopedia.Repositories.RepositoryInterface;
 
@@ -14,12 +15,30 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryClass
             _context = context;
         }
 
-        public async void CreateAsync(ResourcesDto entity)
+        public async void CreateAsync(ReferencesDto entity)
         {
-            throw new NotImplementedException();
+            string query = "Insert Into Reference (ReferenceTitle,ReferenceUrl,ReferenceDescription) values (@title,@url,@description)";
+            var parameters = new DynamicParameters();
+            parameters.Add("@title", entity.ReferenceTitle);
+            parameters.Add("@url", entity.ReferenceUrl);
+            parameters.Add("@description", entity.ReferenceDescription);
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, parameters);
+            }
         }
 
-        public async Task<List<ResourcesDto>> GetAllAsync()
+        public async Task<List<ReferencesDto>> GetAllAsync()
+        {
+            string query = "Select * from Reference";
+            using (var connection = _context.CreateConnection())
+            {
+                var values = await connection.QueryAsync<ReferencesDto>(query);
+                return values.ToList();
+            }
+        }
+
+        public async Task<List<ResourcesDto>> GetAllWithEventAndReferenceAsync()
         {
             string query = "Select ReferenceTitle,EventTitle,ReferenceUrl,ReferenceDescription from MysteriousEventReference Inner Join Reference on MysteriousEventReference.ReferenceID = Reference.ReferenceID Inner Join MysteriousEvent on MysteriousEventReference.EventID = MysteriousEvent.EventID";
             using (var connection = _context.CreateConnection())
@@ -29,14 +48,30 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryClass
             }
         }
 
-        public async Task<ResourcesDto> GetItemAsync(int id)
+        public async Task<ReferencesDto> GetItemAsync(int id)
         {
-            throw new NotImplementedException();
+            string query = "Select * from Reference where ReferenceID=@referenceId";
+            var parameters = new DynamicParameters();
+            parameters.Add("@referenceId", id);
+            using (var connection = _context.CreateConnection())
+            {
+                var value = await connection.QueryFirstOrDefaultAsync<ReferencesDto>(query, parameters);
+                return value;
+            }
         }
 
-        public async void UpdateAsync(ResourcesDto entity)
+        public async void UpdateAsync(ReferencesDto entity)
         {
-            throw new NotImplementedException();
+            string query = "Update Reference Set ReferenceTitle=@title,ReferenceUrl=@url,ReferenceDescription=@description where ReferenceID=@referenceId";
+            var parameters = new DynamicParameters();
+            parameters.Add("@title", entity.ReferenceTitle);
+            parameters.Add("@url", entity.ReferenceUrl);
+            parameters.Add("@description", entity.ReferenceDescription);
+            parameters.Add("@referenceId", entity.ReferenceID);
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, parameters);
+            }
         }
     }
 }

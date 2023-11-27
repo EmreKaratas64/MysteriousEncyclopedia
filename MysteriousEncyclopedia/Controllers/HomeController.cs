@@ -47,7 +47,7 @@ namespace MysteriousEncyclopedia.Controllers
 
         public async Task<IActionResult> HomeResources()
         {
-            var resources = await _resource.GetAllAsync();
+            var resources = await _resource.GetAllWithEventAndReferenceAsync();
             return View(resources);
         }
 

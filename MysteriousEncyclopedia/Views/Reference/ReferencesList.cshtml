@@ -1,0 +1,57 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+@model IPagedList<ReferencesDto>
+@{
+    ViewData["Title"] = "ReferencesList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .btn-primary a {
+        color: white;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">References</h4>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Reference Title</th>
+                                <th>Reference Url</th>
+                                <th>Update</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.ReferenceID</td>
+                                    <td>@item.ReferenceTitle</td>
+                                    <td>@item.ReferenceUrl</td>
+                                    <td><a href="/Reference/UpdateReference/@item.ReferenceID" class="btn btn-outline-info btn-rounded btn-fw">Edit</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <br />
+                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("TopicList", new { page }), new PagedListRenderOptions
+               {
+                   UlElementClasses = new List<string> { "btn-group", "pb-2", "pb-lg-0" },
+                   LiElementClasses = new List<string> { "btn", "btn-primary" }
+               })
+                    <br />
+                    <a href="/Reference/AddReference/" class="btn btn-outline-primary btn-rounded btn-fw">Add New Reference</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
