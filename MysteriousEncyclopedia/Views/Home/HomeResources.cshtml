@@ -1,6 +1,9 @@
-﻿@model List<ResourcesDto>
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+@model IPagedList<ResourcesDto>
 @{
-    ViewData["Title"] = "HomeResources";
+    ViewData["Title"] = "Resources of Events";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -38,6 +41,15 @@
                     </div>
                 </div>
             }
+            <div class="col-12">
+                <nav aria-label="Page navigation">
+                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("HomeResources", new { page }), new PagedListRenderOptions
+               {
+                   UlElementClasses = new List<string> { "pagination", "pagination-lg", "justify-content-center", "bg-white", "mb-0", "p-lg-5" },
+                   LiElementClasses = new List<string> { "page-item", "page-link" }
+               })
+                </nav>
+            </div>
         </div>
     </div>
 </div>

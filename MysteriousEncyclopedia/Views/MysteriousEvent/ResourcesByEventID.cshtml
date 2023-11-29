@@ -1,9 +1,9 @@
 ﻿@using X.PagedList
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Web.Common
-@model IPagedList<ReferencesDto>
+@model IPagedList<ResourcesDto>
 @{
-    ViewData["Title"] = "ReferencesList";
+    ViewData["Title"] = "Resources of the Event";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -17,41 +17,40 @@
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">References</h4>
+                <h4 class="card-title">Resources of Mysterious Event</h4>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Reference Title</th>
-                                <th>Reference Url</th>
-                                <th>Update</th>
+                                <th>Event Title</th>
+                                <th>Resource Title</th>
+                                <th>Resource Url</th>
+                                <th>Resource Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@item.ReferenceID</td>
+                                    <td>@item.EventTitle</td>
                                     <td>@item.ReferenceTitle</td>
                                     <td><a href="@item.ReferenceUrl" target="_blank" class="btn btn-outline-info btn-rounded btn-fw">Url</a></td>
-                                    <td><a href="/Reference/UpdateReference/@item.ReferenceID" class="btn btn-outline-info btn-rounded btn-fw">Edit</a></td>
+                                    <td>@item.ReferenceDescription</td>
                                 </tr>
                             }
                         </tbody>
                     </table>
                     <br />
-                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("TopicList", new { page }), new PagedListRenderOptions
+                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("ResourcesByEventID", new { page }), new PagedListRenderOptions
                {
                    UlElementClasses = new List<string> { "btn-group", "pb-2", "pb-lg-0" },
                    LiElementClasses = new List<string> { "btn", "btn-primary" }
                })
                     <br />
-                    <a href="/Reference/AddReference/" class="btn btn-outline-primary btn-rounded btn-fw">Add New Reference</a>
+                    <a href="/MysteriousEvent/AddResourceToEvent/@ViewBag.eventId" class="btn btn-outline-primary btn-rounded btn-fw">Add resource to event</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 

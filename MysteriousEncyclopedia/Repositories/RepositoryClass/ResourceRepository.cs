@@ -15,6 +15,18 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryClass
             _context = context;
         }
 
+        public async void AddReferenceToTheEventAsync(MysteriousEventReferenceDto mysteriousEventReference)
+        {
+            string query = "Insert Into MysteriousEventReference (EventID,ReferenceID) values (@eventId,@referenceId)";
+            var parameters = new DynamicParameters();
+            parameters.Add("@eventId", mysteriousEventReference.EventID);
+            parameters.Add("@referenceId", mysteriousEventReference.ReferenceID);
+            using (var connections = _context.CreateConnection())
+            {
+                await connections.ExecuteAsync(query, parameters);
+            }
+        }
+
         public async void CreateAsync(ReferencesDto entity)
         {
             string query = "Insert Into Reference (ReferenceTitle,ReferenceUrl,ReferenceDescription) values (@title,@url,@description)";
@@ -57,6 +69,18 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryClass
             {
                 var value = await connection.QueryFirstOrDefaultAsync<ReferencesDto>(query, parameters);
                 return value;
+            }
+        }
+
+        public async Task<List<ResourcesDto>> GetResourcesWithEventAndReferenceByEventIdAsync(int id)
+        {
+            string query = "Select ReferenceTitle,EventTitle,ReferenceUrl,ReferenceDescription from MysteriousEventReference Inner Join Reference on MysteriousEventReference.ReferenceID = Reference.ReferenceID Inner Join MysteriousEvent on MysteriousEventReference.EventID = MysteriousEvent.EventID where MysteriousEventReference.EventID=@id";
+            var parameters = new DynamicParameters();
+            parameters.Add("@id", id);
+            using (var connection = _context.CreateConnection())
+            {
+                var values = await connection.QueryAsync<ResourcesDto>(query, parameters);
+                return values.ToList();
             }
         }
 

@@ -45,10 +45,10 @@ namespace MysteriousEncyclopedia.Controllers
             return View(mystery);
         }
 
-        public async Task<IActionResult> HomeResources()
+        public async Task<IActionResult> HomeResources(int page = 1)
         {
             var resources = await _resource.GetAllWithEventAndReferenceAsync();
-            return View(resources);
+            return View(resources.ToPagedList(page, 9));
         }
 
         public IActionResult HomeContact()

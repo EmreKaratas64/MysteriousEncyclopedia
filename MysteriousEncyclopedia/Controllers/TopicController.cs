@@ -5,6 +5,7 @@ using X.PagedList;
 
 namespace MysteriousEncyclopedia.Controllers
 {
+    //viewing controller Ctrl + m + g
     public class TopicController : Controller
     {
         private readonly ITopic _topic;
