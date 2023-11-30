@@ -30,13 +30,14 @@ namespace MysteriousEncyclopedia.Controllers
         public async Task<IActionResult> HomeMysteriousEventList(int page = 1)
         {
             var events = await _mysteriousEvent.GetVisibleEventsAsync();
-            return View(events.ToPagedList(page, 2));
+            return View(events.ToPagedList(page, 10));
         }
 
         public async Task<IActionResult> HomeMysteriousEventsByTopic(string topic, int page = 1)
         {
             var events = await _mysteriousEvent.GetVisibleEventsByTopicAsync(topic);
-            return View(events.ToPagedList(page, 2));
+            ViewBag.topic = topic;
+            return View(events.ToPagedList(page, 10));
         }
 
         public async Task<IActionResult> HomeMysteriousEventDetail(int id)
@@ -48,7 +49,7 @@ namespace MysteriousEncyclopedia.Controllers
         public async Task<IActionResult> HomeResources(int page = 1)
         {
             var resources = await _resource.GetAllWithEventAndReferenceAsync();
-            return View(resources.ToPagedList(page, 9));
+            return View(resources.ToPagedList(page, 12));
         }
 
         public IActionResult HomeContact()

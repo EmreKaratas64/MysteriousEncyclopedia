@@ -108,7 +108,7 @@
 
                     <div class="col-12">
                         <nav aria-label="Page navigation">
-                            @Html.PagedListPager((IPagedList)Model, page => Url.Action("HomeMysteriousEventList", new { page }), new PagedListRenderOptions
+                            @Html.PagedListPager((IPagedList)Model, page => Url.Action("HomeMysteriousEventsByTopic", new { page, topic = @ViewBag.topic }), new PagedListRenderOptions
                        {
                            UlElementClasses = new List<string> { "pagination", "pagination-lg", "justify-content-center", "bg-white", "mb-0", "p-lg-5" },
                            LiElementClasses = new List<string> { "page-item", "page-link" }

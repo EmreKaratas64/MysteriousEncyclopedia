@@ -35,7 +35,7 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryClass
 
         public async Task<List<MysteriousEventDto>> GetAllAsync()
         {
-            string query = "Select * from MysteriousEvent";
+            string query = "Select * from MysteriousEvent Order by EventID desc";
             using (var connection = _context.CreateConnection())
             {
                 var values = await connection.QueryAsync<MysteriousEventDto>(query);
@@ -45,7 +45,7 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryClass
 
         public async Task<List<MysteriousEventDto>> GetVisibleEventsByTopicAsync(string topic)
         {
-            string query = "Select * from MysteriousEvent WHERE EventVisible=1 and EventTopics COLLATE SQL_Latin1_General_CP1_CI_AS LIKE '%' + @Topic + '%'";
+            string query = "Select * from MysteriousEvent WHERE EventVisible=1 and EventTopics COLLATE SQL_Latin1_General_CP1_CI_AS LIKE '%' + @Topic + '%' Order by EventID desc";
             var parameters = new DynamicParameters();
             parameters.Add("@Topic", topic);
             using (var connection = _context.CreateConnection())
@@ -79,7 +79,7 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryClass
 
         public async Task<List<MysteriousEventDto>> GetVisibleEventsAsync()
         {
-            string query = "Select * from MysteriousEvent where EventVisible=1";
+            string query = "Select * from MysteriousEvent where EventVisible=1 Order by EventID desc";
             using (var connection = _context.CreateConnection())
             {
                 var values = await connection.QueryAsync<MysteriousEventDto>(query);

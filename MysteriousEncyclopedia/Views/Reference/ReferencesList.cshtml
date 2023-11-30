@@ -41,7 +41,7 @@
                         </tbody>
                     </table>
                     <br />
-                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("TopicList", new { page }), new PagedListRenderOptions
+                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("ReferencesList", new { page }), new PagedListRenderOptions
                {
                    UlElementClasses = new List<string> { "btn-group", "pb-2", "pb-lg-0" },
                    LiElementClasses = new List<string> { "btn", "btn-primary" }

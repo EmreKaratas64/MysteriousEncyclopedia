@@ -20,7 +20,7 @@ namespace MysteriousEncyclopedia.Controllers
         public async Task<IActionResult> MysteriousEventList(int page = 1)
         {
             var mysteriousEvents = await _mysteriousEvent.GetAllAsync();
-            return View(mysteriousEvents.ToPagedList(page, 9));
+            return View(mysteriousEvents.ToPagedList(page, 12));
         }
 
         public async Task<IActionResult> ResourcesByEventID(int id, int page = 1)
@@ -43,6 +43,9 @@ namespace MysteriousEncyclopedia.Controllers
         [HttpPost]
         public async Task<IActionResult> AddResourceToEvent(MysteriousEventReferenceDto mysteriousEventReference)
         {
+            var reference = await _resource.GetItemAsync(mysteriousEventReference.ReferenceID);
+            if (reference == null)
+                return NotFound();
             if (ModelState.IsValid)
             {
                 _resource.AddReferenceToTheEventAsync(mysteriousEventReference);

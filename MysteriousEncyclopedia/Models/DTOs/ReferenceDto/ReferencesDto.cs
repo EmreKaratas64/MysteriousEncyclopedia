@@ -11,7 +11,7 @@ namespace MysteriousEncyclopedia.Models.DTOs.ReferenceDto
         public string ReferenceTitle { get; set; }
 
         [Required(ErrorMessage = "Reference url cannot be empty")]
-        [MaxLength(100, ErrorMessage = "Reference url cannot exceed 500 characters")]
+        [MaxLength(500, ErrorMessage = "Reference url cannot exceed 500 characters")]
         public string ReferenceUrl { get; set; }
 
         [MaxLength(1000, ErrorMessage = "Reference description cannot exceed 500 characters")]
