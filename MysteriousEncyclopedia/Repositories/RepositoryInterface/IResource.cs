@@ -10,5 +10,7 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryInterface
         Task<List<ResourcesDto>> GetResourcesWithEventAndReferenceByEventIdAsync(int id);
 
         void AddReferenceToTheEventAsync(MysteriousEventReferenceDto mysteriousEventReference);
+
+        void DeleteMysteriousEventReferenceAsync(int eventId, int referenceId);
     }
 }

@@ -54,6 +54,16 @@ namespace MysteriousEncyclopedia.Controllers
             return View(mysteriousEventReference);
         }
 
+        public async Task<IActionResult> DeleteResourceOfEvent(int eventId, int referenceId)
+        {
+            var reference = await _resource.GetItemAsync(referenceId);
+            var eventt = await _mysteriousEvent.GetItemAsync(eventId);
+            if (reference != null || eventt != null)
+                _resource.DeleteMysteriousEventReferenceAsync(eventId, referenceId);
+            return RedirectToAction("ResourcesByEventID", new { id = eventId });
+
+        }
+
         [HttpGet]
         public IActionResult MysteriousEventAdd()
         {

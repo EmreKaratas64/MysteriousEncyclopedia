@@ -19,10 +19,21 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryClass
             string query = "Insert Into Contact (ContactTitle,ContactNameSurname,ContactEmail,ContactText,ContactDate) values (@title,@name,@email,@text,@date)";
             var parameters = new DynamicParameters();
             parameters.Add("@title", entity.ContactTitle);
-            parameters.Add("@name", entity.ContactName);
+            parameters.Add("@name", entity.ContactNameSurname);
             parameters.Add("@email", entity.ContactEmail);
             parameters.Add("@text", entity.ContactText);
             parameters.Add("@date", entity.ContactDate);
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, parameters);
+            }
+        }
+
+        public async void DeleteContactAsync(int id)
+        {
+            string query = "Delete from Contact where ContactID=@contactId";
+            var parameters = new DynamicParameters();
+            parameters.Add("@contactId", id);
             using (var connection = _context.CreateConnection())
             {
                 await connection.ExecuteAsync(query, parameters);

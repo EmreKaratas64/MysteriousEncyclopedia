@@ -26,6 +26,7 @@
                                 <th>Resource Title</th>
                                 <th>Resource Url</th>
                                 <th>Resource Description</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,6 +37,9 @@
                                     <td>@item.ReferenceTitle</td>
                                     <td><a href="@item.ReferenceUrl" target="_blank" class="btn btn-outline-info btn-rounded btn-fw">Url</a></td>
                                     <td>@item.ReferenceDescription</td>
+                                    <td>
+                                        <a class="btn btn-outline-danger btn-rounded btn-fw" href="@Url.Action("DeleteResourceOfEvent", new { eventId=@ViewBag.eventId, referenceId=item.ReferenceID})">Delete</a>
+                                    </td>
                                 </tr>
                             }
                         </tbody>

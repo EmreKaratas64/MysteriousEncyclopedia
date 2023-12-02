@@ -9,8 +9,8 @@ namespace MysteriousEncyclopedia.Models.DTOs.ContactDto
         [Required(ErrorMessage = "Subject cannot be empty")]
         public string ContactTitle { get; set; }
 
-        [Required(ErrorMessage = "Contact name cannot be empty")]
-        public string ContactName { get; set; }
+        [Required(ErrorMessage = "Contact name surname cannot be empty")]
+        public string ContactNameSurname { get; set; }
 
         [Required(ErrorMessage = "Email cannot be empty")]
         [EmailAddress(ErrorMessage = "Please enter a valid email")]

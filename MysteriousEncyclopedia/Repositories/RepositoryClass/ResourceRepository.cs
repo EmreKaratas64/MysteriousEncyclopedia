@@ -40,6 +40,18 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryClass
             }
         }
 
+        public async void DeleteMysteriousEventReferenceAsync(int eventId, int referenceId)
+        {
+            string query = "Delete from MysteriousEventReference where EventID=@eventId and ReferenceID=@referenceId";
+            var parameters = new DynamicParameters();
+            parameters.Add("@eventId", eventId);
+            parameters.Add("@referenceId", referenceId);
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, parameters);
+            }
+        }
+
         public async Task<List<ReferencesDto>> GetAllAsync()
         {
             string query = "Select * from Reference";
@@ -74,7 +86,7 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryClass
 
         public async Task<List<ResourcesDto>> GetResourcesWithEventAndReferenceByEventIdAsync(int id)
         {
-            string query = "Select ReferenceTitle,EventTitle,ReferenceUrl,ReferenceDescription from MysteriousEventReference Inner Join Reference on MysteriousEventReference.ReferenceID = Reference.ReferenceID Inner Join MysteriousEvent on MysteriousEventReference.EventID = MysteriousEvent.EventID where MysteriousEventReference.EventID=@id";
+            string query = "Select MysteriousEventReference.ReferenceID,ReferenceTitle,EventTitle,ReferenceUrl,ReferenceDescription from MysteriousEventReference Inner Join Reference on MysteriousEventReference.ReferenceID = Reference.ReferenceID Inner Join MysteriousEvent on MysteriousEventReference.EventID = MysteriousEvent.EventID where MysteriousEventReference.EventID=@id";
             var parameters = new DynamicParameters();
             parameters.Add("@id", id);
             using (var connection = _context.CreateConnection())
