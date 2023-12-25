@@ -3,11 +3,13 @@ using MysteriousEncyclopedia.Repositories.RepositoryClass;
 using MysteriousEncyclopedia.Repositories.RepositoryInterface;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddTransient<Context>();
 builder.Services.AddTransient<ITopic, TopicRepository>();
 builder.Services.AddTransient<IMysteriousEvent, MysteriousEventRepository>();
 builder.Services.AddTransient<IResource, ResourceRepository>();
 builder.Services.AddTransient<IContact, ContactRepository>();
+builder.Services.AddTransient<IRequest, RequestRepository>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

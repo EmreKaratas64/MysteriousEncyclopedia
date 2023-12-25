@@ -1,0 +1,77 @@
+﻿@model RequestDto
+@{
+    ViewData["Title"] = "Send a Request";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- Header Start -->
+<div class="container-fluid page-header">
+    <div class="container">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
+            <h3 class="display-4 text-white text-uppercase">Request</h3>
+            <div class="d-inline-flex text-white">
+                <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
+                <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                <p class="m-0 text-uppercase">Request</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+<!-- Contact Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="text-center mb-3 pb-3">
+            <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Request</h6>
+            <h1>Send your request</h1>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="contact-form bg-white" style="padding: 30px;">
+                    <div id="success">
+                        @if (TempData["RequestSuccess"] != null)
+                        {
+                            <div class='alert alert-success'>
+                                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                <strong>@TempData["RequestSuccess"] </strong>
+                            </div>
+                        }
+                        else if (TempData["RequestFail"] != null)
+                        {
+                            <div class='alert alert-danger'>
+                                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                <strong>@TempData["RequestFail"]</strong>
+                            </div>
+                        }
+                    </div>
+                    <form novalidate="novalidate" method="post">
+                        <div class="form-row">
+                            <div class="control-group col-sm-6">
+                                <input type="text" asp-for="RequestNameSurname" class="form-control p-4 my-3" placeholder="Your Name Surname">
+                                <span class="text-danger" asp-validation-for="@Model.RequestNameSurname"></span>
+                            </div>
+                            <div class="control-group col-sm-6">
+                                <input type="text" asp-for="RequestUserName" class="form-control p-4 my-3" placeholder="Your Username">
+                                <span class="text-danger" asp-validation-for="@Model.RequestUserName"></span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <input type="text" asp-for="RequestEventTitle" class="form-control p-4 my-3" placeholder="Event Title">
+                            <span class="text-danger" asp-validation-for="@Model.RequestEventTitle"></span>
+                        </div>
+                        <div class="control-group">
+                            <textarea class="form-control py-3 px-4 my-3" asp-for="RequestDescription" rows="7" placeholder="Your request description..."></textarea>
+                            <span class="text-danger" asp-validation-for="@Model.RequestDescription"></span>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-primary py-3 px-4" type="submit">Send Request</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact End -->
