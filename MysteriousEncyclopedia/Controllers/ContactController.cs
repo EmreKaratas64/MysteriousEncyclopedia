@@ -55,7 +55,7 @@ namespace MysteriousEncyclopedia.Controllers
             {
                 _request.CreateAsync(requestDto);
                 TempData["RequestSuccess"] = "Your request has been sent, thank you";
-                return RedirectToAction("HomePage", "Home");
+                return View();
             }
             TempData["RequestFail"] = "Your request could not be sent :(";
             return View(requestDto);

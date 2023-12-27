@@ -11,6 +11,7 @@ builder.Services.AddTransient<IMysteriousEvent, MysteriousEventRepository>();
 builder.Services.AddTransient<IResource, ResourceRepository>();
 builder.Services.AddTransient<IContact, ContactRepository>();
 builder.Services.AddTransient<IRequest, RequestRepository>();
+builder.Services.AddTransient<IComment, CommentRepository>();
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {

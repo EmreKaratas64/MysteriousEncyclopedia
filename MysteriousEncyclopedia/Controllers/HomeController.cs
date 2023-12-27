@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MysteriousEncyclopedia.Models;
+using MysteriousEncyclopedia.Models.DTOs.Comment;
 using MysteriousEncyclopedia.Models.DTOs.ContactDto;
 using MysteriousEncyclopedia.Repositories.RepositoryInterface;
 using System.Diagnostics;
@@ -13,13 +15,17 @@ namespace MysteriousEncyclopedia.Controllers
         private readonly IMysteriousEvent _mysteriousEvent;
         private readonly IResource _resource;
         private readonly IContact _contact;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IComment _comment;
 
-        public HomeController(ILogger<HomeController> logger, IMysteriousEvent mysteriousEvent, IResource resource, IContact contact)
+        public HomeController(ILogger<HomeController> logger, IMysteriousEvent mysteriousEvent, IResource resource, IContact contact, UserManager<IdentityUser> userManager, IComment comment)
         {
             _logger = logger;
             _mysteriousEvent = mysteriousEvent;
             _resource = resource;
             _contact = contact;
+            _userManager = userManager;
+            _comment = comment;
         }
 
         public IActionResult HomePage()
@@ -45,6 +51,24 @@ namespace MysteriousEncyclopedia.Controllers
             var mystery = await _mysteriousEvent.GetVisibleItemAsync(id);
             return View(mystery);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> AddComment(CommentDto commentDto)
+        {
+            if (User.Identity.Name == "" || User.Identity.Name == null) return RedirectToAction("SignIn", "Account");
+            else
+            {
+                var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+                commentDto.UserId = currentUser.Id;
+                if (ModelState.IsValid)
+                {
+                    _comment.CreateAsync(commentDto);
+                    return RedirectToAction("HomePage", "Home");
+                }
+                return RedirectToAction("HomeMysteriousEventDetail", new { id = commentDto.MysteryID });
+            }
+        }
+
 
         public async Task<IActionResult> HomeResources(int page = 1)
         {
