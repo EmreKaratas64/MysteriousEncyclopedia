@@ -16,13 +16,13 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryClass
 
         public async void CreateAsync(RequestDto entity)
         {
-            string query = "Insert Into Request (RequestNameSurname,RequestUserName,RequestEventTitle,RequestDescription,RequestDate, RequestStatus) values (@namesurname,@username,@eventTitle,@description,@date,@status)";
+            string query = "Insert Into Request (RequestNameSurname,RequestUserId,RequestEventId,RequestDescription,RequestDate, RequestStatus) values (@namesurname,@username,@eventTitle,@description,@date,@status)";
             var parameters = new DynamicParameters();
             parameters.Add("@namesurname", entity.RequestNameSurname);
-            parameters.Add("@username", entity.RequestUserName);
-            parameters.Add("@eventTitle", entity.RequestEventTitle);
+            parameters.Add("@username", entity.RequestUserId);
+            parameters.Add("@eventTitle", entity.RequestEventId);
             parameters.Add("@description", entity.RequestDescription);
-            parameters.Add("@date", entity.RequestDate);
+            parameters.Add("@date", DateTime.Now);
             parameters.Add("@status", entity.RequestStatus);
             using (var connection = _context.CreateConnection())
             {

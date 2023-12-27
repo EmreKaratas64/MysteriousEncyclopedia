@@ -3,6 +3,13 @@
     ViewData["Title"] = "Mysterious Event Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    @@media (max-width: 767px) {
+        .text-primary {
+            font-size: 12px; /* Adjust the font size for smaller screens */
+        }
+    }
+</style>
 
 <!-- Header Start -->
 <div class="container-fluid page-header">
@@ -18,7 +25,6 @@
     </div>
 </div>
 <!-- Header End -->
-
 <!-- Blog Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">
@@ -34,18 +40,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white mb-3" style="padding: 30px;">
-                       @*  <div class="d-flex mb-3">
-                            @{
-                                List<string> topicsList = new List<string>(Model.EventTopics.Split(","));
-                            }
+                    <div class="bg-white mb-3" style="padding: 20px;">
+                        @Html.Raw(Model.EventContent)
+                        @{
+                            List<string> topicsList = new List<string>(Model.EventTopics.Split(","));
+                        }
+                        <div class="d-flex flex-wrap m-n1">
                             @foreach (var topic in topicsList)
                             {
-                                <span class="text-primary px-2">|</span>
-                                <a class="text-primary text-uppercase text-decoration-none" href="/Home/HomeMysteriousEventsByTopic?topic=@topic">@topic</a>
+                                <a href="/Home/HomeMysteriousEventsByTopic?topic=@topic" class="btn btn-dark m-1">@topic</a>
                             }
-                        </div> *@
-                        @Html.Raw(Model.EventContent)
+                        </div>
+                        <br />
+                        <a href="/Contact/MakeRequest/@Model.EventID" class="btn btn-info px-md-5 mt-2">Request</a>
                     </div>
                 </div>
                 <!-- Blog Detail End -->
@@ -124,4 +131,3 @@
     </div>
 </div>
 <!-- Blog End -->
-

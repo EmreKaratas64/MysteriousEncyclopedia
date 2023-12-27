@@ -46,20 +46,12 @@
                         }
                     </div>
                     <form novalidate="novalidate" method="post">
-                        <div class="form-row">
-                            <div class="control-group col-sm-6">
-                                <input type="text" asp-for="RequestNameSurname" class="form-control p-4 my-3" placeholder="Your Name Surname">
-                                <span class="text-danger" asp-validation-for="@Model.RequestNameSurname"></span>
-                            </div>
-                            <div class="control-group col-sm-6">
-                                <input type="text" asp-for="RequestUserName" class="form-control p-4 my-3" placeholder="Your Username">
-                                <span class="text-danger" asp-validation-for="@Model.RequestUserName"></span>
-                            </div>
+
+                        <div class="control-group ">
+                            <input type="text" asp-for="RequestNameSurname" class="form-control p-4 my-3" placeholder="Your Name Surname">
+                            <span class="text-danger" asp-validation-for="@Model.RequestNameSurname"></span>
                         </div>
-                        <div class="control-group">
-                            <input type="text" asp-for="RequestEventTitle" class="form-control p-4 my-3" placeholder="Event Title">
-                            <span class="text-danger" asp-validation-for="@Model.RequestEventTitle"></span>
-                        </div>
+                            <input type="hidden" asp-for="RequestEventId">
                         <div class="control-group">
                             <textarea class="form-control py-3 px-4 my-3" asp-for="RequestDescription" rows="7" placeholder="Your request description..."></textarea>
                             <span class="text-danger" asp-validation-for="@Model.RequestDescription"></span>

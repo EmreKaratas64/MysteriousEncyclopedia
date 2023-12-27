@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MysteriousEncyclopedia.Models.DapperContext;
 using MysteriousEncyclopedia.Models.DTOs.AccountDto;
 
 namespace MysteriousEncyclopedia.Controllers
@@ -10,13 +9,11 @@ namespace MysteriousEncyclopedia.Controllers
     [AutoValidateAntiforgeryToken]
     public class AccountController : Controller
     {
-        private readonly Context _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        public AccountController(Context context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
-            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -57,9 +54,36 @@ namespace MysteriousEncyclopedia.Controllers
             return View(signUpDto);
         }
 
+        [HttpGet]
         public IActionResult SignIn()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SignIn(SignInDto signInDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByNameAsync(signInDto.username);
+                if (user == null) return View(signInDto);
+                bool isUser = await _userManager.IsInRoleAsync(user, "User");
+                if (isUser)
+                {
+                    var result = await _signInManager.PasswordSignInAsync(signInDto.username, signInDto.password, false, true);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("HomePage", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Invalid login attempt!");
+                        return View(signInDto);
+                    }
+                }
+                ModelState.AddModelError("", "Your account might have been banned!");
+            }
+            return View(signInDto);
         }
 
     }
