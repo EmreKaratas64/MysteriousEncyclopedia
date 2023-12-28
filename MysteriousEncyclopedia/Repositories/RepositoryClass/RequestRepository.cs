@@ -30,19 +30,49 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryClass
             }
         }
 
-        public Task<List<RequestDto>> GetAllAsync()
+        public async void DeleteRequestAsync(int Id)
         {
-            throw new NotImplementedException();
+            string query = "Delete from Request where RequestID=@id";
+            var parameters = new DynamicParameters();
+            parameters.Add("@id", Id);
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, parameters);
+            }
         }
 
-        public Task<RequestDto> GetItemAsync(int id)
+        public async Task<List<RequestDto>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            string query = "Select RequestID,RequestNameSurname,AspNetUsers.UserName,MysteriousEvent.EventTitle,RequestDate,RequestStatus from Request Inner Join AspNetUsers on Request.RequestUserId = AspNetUsers.Id Inner Join MysteriousEvent on Request.RequestEventId = MysteriousEvent.EventID order by RequestID desc";
+            using (var connection = _context.CreateConnection())
+            {
+                var values = await connection.QueryAsync<RequestDto>(query);
+                return values.ToList();
+            }
         }
 
-        public void UpdateAsync(RequestDto entity)
+        public async Task<RequestDto> GetItemAsync(int Id)
         {
-            throw new NotImplementedException();
+            string query = "Select * from Request where RequestID=@id";
+            var parameters = new DynamicParameters();
+            parameters.Add("@id", Id);
+            using (var connection = _context.CreateConnection())
+            {
+                var value = await connection.QueryFirstOrDefaultAsync<RequestDto>(query, parameters);
+                return value;
+            }
+        }
+
+        public async void UpdateAsync(RequestDto entity)
+        {
+            string query = "Update Request Set RequestStatus=@requestStatus where RequestID=@requestId";
+            var parameters = new DynamicParameters();
+            parameters.Add("@requestStatus", entity.RequestStatus);
+            parameters.Add("@requestId", entity.RequestID);
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, parameters);
+            }
         }
     }
 }

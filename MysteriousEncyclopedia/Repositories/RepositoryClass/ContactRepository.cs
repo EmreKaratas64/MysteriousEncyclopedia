@@ -42,7 +42,7 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryClass
 
         public async Task<List<ContactsDto>> GetAllAsync()
         {
-            string query = "Select * from Contact";
+            string query = "Select * from Contact order by ContactID desc";
             using (var connection = _context.CreateConnection())
             {
                 var values = await connection.QueryAsync<ContactsDto>(query);

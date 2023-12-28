@@ -37,6 +37,7 @@ namespace MysteriousEncyclopedia.Controllers
         [HttpGet]
         public async Task<IActionResult> MakeRequest(int Id)
         {
+            if (User.Identity.Name == null || User.Identity.Name == "") return RedirectToAction("SignIn", "Account");
             RequestDto requestDto = new RequestDto();
             requestDto.RequestEventId = Id;
             return View(requestDto);
@@ -46,8 +47,6 @@ namespace MysteriousEncyclopedia.Controllers
         public async Task<IActionResult> MakeRequest(RequestDto requestDto)
         {
             var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
-            if (currentUser == null) return BadRequest();
-
             requestDto.RequestUserId = currentUser.Id;
 
             requestDto.RequestStatus = "pending";
@@ -59,8 +58,38 @@ namespace MysteriousEncyclopedia.Controllers
             }
             TempData["RequestFail"] = "Your request could not be sent :(";
             return View(requestDto);
+        }
 
+        public async Task<IActionResult> RequestList(int page = 1)
+        {
+            var requests = await _request.GetAllAsync();
+            return View(requests.ToPagedList(page, 10));
+        }
 
+        public async Task<IActionResult> DeleteRequest(int Id)
+        {
+            var requestt = await _request.GetItemAsync(Id);
+            if (requestt == null) return BadRequest();
+            _request.DeleteRequestAsync(Id);
+            return RedirectToAction("RequestList");
+        }
+
+        public async Task<IActionResult> ApproveRequest(int id)
+        {
+            var requestt = await _request.GetItemAsync(id);
+            if (requestt == null) return BadRequest();
+            requestt.RequestStatus = "approved";
+            _request.UpdateAsync(requestt);
+            return RedirectToAction("RequestList");
+        }
+
+        public async Task<IActionResult> CancelRequest(int id)
+        {
+            var requestt = await _request.GetItemAsync(id);
+            if (requestt == null) return BadRequest();
+            requestt.RequestStatus = "canceled";
+            _request.UpdateAsync(requestt);
+            return RedirectToAction("RequestList");
         }
     }
 }
