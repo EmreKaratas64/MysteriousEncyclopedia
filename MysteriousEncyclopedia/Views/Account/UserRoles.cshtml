@@ -1,0 +1,40 @@
+﻿@model List<AssignRoleViewModel>
+@{
+    ViewData["Title"] = "User Roles";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Manage User Roles</h4>
+                <form method="post">
+                    <div class="my-3">
+                        <label>Username: @ViewBag.UserName</label>
+                    </div>
+                    <hr />
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <div class="form-group mb-3">
+                            <input type="hidden" asp-for="@Model[i].RoleID" class="form-control" required>
+                            <input type="hidden" asp-for="@Model[i].RoleName" class="form-control" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="font-weight-bold">Role</label>
+                            <div class="form-check form-check-primary">
+                                <label class="form-check-label">
+                                    <input type="checkbox" asp-for="@Model[i].Exists" class="form-check-input">
+                                    @Model[i].RoleName
+                                </label>
+                            </div>
+                        </div>
+                    }
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

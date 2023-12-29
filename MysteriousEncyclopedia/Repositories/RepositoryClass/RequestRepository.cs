@@ -53,7 +53,7 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryClass
 
         public async Task<RequestDto> GetItemAsync(int Id)
         {
-            string query = "Select * from Request where RequestID=@id";
+            string query = "Select RequestID,RequestNameSurname,AspNetUsers.UserName,MysteriousEvent.EventTitle,RequestDescription,RequestStatus from Request Inner Join AspNetUsers on Request.RequestUserId = AspNetUsers.Id Inner Join MysteriousEvent on Request.RequestEventId = MysteriousEvent.EventID where RequestID=@id";
             var parameters = new DynamicParameters();
             parameters.Add("@id", Id);
             using (var connection = _context.CreateConnection())

@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MysteriousEncyclopedia.Models;
 using MysteriousEncyclopedia.Models.DTOs.AccountDto;
+using MysteriousEncyclopedia.Repositories.RepositoryInterface;
+using X.PagedList;
 
 namespace MysteriousEncyclopedia.Controllers
 {
@@ -11,11 +14,13 @@ namespace MysteriousEncyclopedia.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IUser _user;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IUserStore<IdentityUser> userStore, IUser user)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _user = user;
         }
 
         [HttpGet]
@@ -84,6 +89,52 @@ namespace MysteriousEncyclopedia.Controllers
                 ModelState.AddModelError("", "Your account might have been banned!");
             }
             return View(signInDto);
+        }
+
+        public async Task<IActionResult> UserList(int page = 1)
+        {
+            var users = await _user.GetAllAsync();
+            return View(users.ToPagedList(page, 10));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UserRoles(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null) return BadRequest();
+            var roles = await _user.GetAllRolesAsync();
+
+            TempData["UserId"] = user.Id;
+            ViewBag.UserName = user.UserName;
+            var user_roles = await _userManager.GetRolesAsync(user);
+
+            List<AssignRoleViewModel> model = new List<AssignRoleViewModel>();
+
+            foreach (var item in roles)
+            {
+                AssignRoleViewModel m = new AssignRoleViewModel();
+                m.RoleID = item.Id;
+                m.RoleName = item.Name;
+                m.Exists = user_roles.Contains(item.Name);
+                model.Add(m);
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UserRoles(List<AssignRoleViewModel> assignRole)
+        {
+            var userId = TempData["UserId"];
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+
+            foreach (var item in assignRole)
+            {
+                if (item.Exists)
+                    await _userManager.AddToRoleAsync(user, item.RoleName);
+                else
+                    _user.RemoveUserFromRoleAsync(user.Id, item.RoleID);
+            }
+            return RedirectToAction("UserList");
         }
 
     }

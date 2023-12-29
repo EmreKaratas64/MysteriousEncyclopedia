@@ -40,7 +40,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white mb-3" style="padding: 20px;">
+                    <div class="bg-white mb-3 pt-4" style="padding: 20px;">
                         @Html.Raw(Model.EventContent)
                         @{
                             List<string> topicsList = new List<string>(Model.EventTopics.Split(","));
@@ -58,35 +58,7 @@
                 <!-- Blog Detail End -->
 
                 <!-- Comment List Start -->
-                <div class="bg-white" style="padding: 30px; margin-bottom: 30px;">
-                    <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">3 Comments</h4>
-                    <div class="media mb-4">
-                        <img src="~/HomeTheme/img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                        <div class="media-body">
-                            <h6><a href="">John Doe</a> <small><i>01 Jan 2045</i></small></h6>
-                            <p>
-                                Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor labore
-                                accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.
-                                Gubergren clita aliquyam consetetur sadipscing, at tempor amet ipsum diam tempor
-                                consetetur at sit.
-                            </p>
-
-                        </div>
-                    </div>
-                    <div class="media">
-                        <img src="~/HomeTheme/img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                        <div class="media-body">
-                            <h6><a href="">John Doe</a> <small><i>01 Jan 2045</i></small></h6>
-                            <p>
-                                Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor labore
-                                accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.
-                                Gubergren clita aliquyam consetetur sadipscing, at tempor amet ipsum diam tempor
-                                consetetur at sit.
-                            </p>
-
-                        </div>
-                    </div>
-                </div>
+                @await Component.InvokeAsync("EventDetailCommentList",new {id=Model.EventID})
                 <!-- Comment List End -->
 
                 <!-- Comment Form Start -->

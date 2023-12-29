@@ -12,10 +12,12 @@ builder.Services.AddTransient<IResource, ResourceRepository>();
 builder.Services.AddTransient<IContact, ContactRepository>();
 builder.Services.AddTransient<IRequest, RequestRepository>();
 builder.Services.AddTransient<IComment, CommentRepository>();
+builder.Services.AddTransient<IUser, UserRepository>();
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     options.Lockout.MaxFailedAccessAttempts = 3;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
     //options.SignIn.RequireConfirmedEmail = true;
     options.User.RequireUniqueEmail = true;
 }).AddDapperStores(options =>

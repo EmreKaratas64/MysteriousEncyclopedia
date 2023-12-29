@@ -1,0 +1,31 @@
+﻿@model CommentDto
+@{
+    ViewData["Title"] = "CommentDetail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Comment Details</h4>
+                <form class="forms-sample">
+                    <div class="form-group">
+                        <input type="text" asp-for="EventTitle" class="form-control my-4">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" asp-for="UserName" class="form-control my-4">
+                    </div>
+                    <div class="form-group">
+                        <textarea asp-for="CommentText" rows="10" class="form-control my-4"></textarea>
+                    </div>
+                    <a href="/Contact/ListComments/" class="btn btn-dark btn-rounded">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

@@ -11,12 +11,14 @@ namespace MysteriousEncyclopedia.Controllers
         private readonly IContact _contact;
         private readonly IRequest _request;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IComment _comment;
 
-        public ContactController(IContact contact, IRequest request, UserManager<IdentityUser> userManager)
+        public ContactController(IContact contact, IRequest request, UserManager<IdentityUser> userManager, IComment comment)
         {
             _contact = contact;
             _request = request;
             _userManager = userManager;
+            _comment = comment;
         }
 
         public async Task<IActionResult> ListContacts(int page = 1)
@@ -66,6 +68,13 @@ namespace MysteriousEncyclopedia.Controllers
             return View(requests.ToPagedList(page, 10));
         }
 
+        public async Task<IActionResult> RequestDetail(int id)
+        {
+            var requestt = await _request.GetItemAsync(id);
+            if (requestt == null) return BadRequest();
+            return View(requestt);
+        }
+
         public async Task<IActionResult> DeleteRequest(int Id)
         {
             var requestt = await _request.GetItemAsync(Id);
@@ -90,6 +99,36 @@ namespace MysteriousEncyclopedia.Controllers
             requestt.RequestStatus = "canceled";
             _request.UpdateAsync(requestt);
             return RedirectToAction("RequestList");
+        }
+
+        public async Task<IActionResult> ListComments(int page = 1)
+        {
+            var comments = await _comment.GetAllAsync();
+            return View(comments.ToPagedList(page, 10));
+        }
+
+        public async Task<IActionResult> CommentDetail(int id)
+        {
+            var comment = await _comment.GetItemAsync(id);
+            if (comment == null) return BadRequest();
+            return View(comment);
+        }
+
+        public async Task<IActionResult> DeleteComment(int id)
+        {
+            var comment = await _comment.GetItemAsync(id);
+            if (comment == null) return BadRequest();
+            _comment.DeleteCommentAsync(id);
+            return RedirectToAction("ListComments");
+        }
+
+        public async Task<IActionResult> AcceptComment(int id)
+        {
+            var comment = await _comment.GetItemAsync(id);
+            if (comment == null) return BadRequest();
+            comment.CommentStatus = true;
+            _comment.UpdateAsync(comment);
+            return RedirectToAction("ListComments");
         }
     }
 }
