@@ -91,6 +91,41 @@ namespace MysteriousEncyclopedia.Controllers
             return View(signInDto);
         }
 
+        [HttpGet]
+        public IActionResult Setting()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Setting(UserSettingViewModel userSetting)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                var result = await _userManager.ChangePasswordAsync(user, userSetting.currentpassword, userSetting.password);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("SignOut");
+                }
+                else
+                {
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError("", item.Description);
+                    }
+                }
+            }
+            return View(userSetting);
+        }
+
+        public async Task<IActionResult> SignOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("SignIn");
+        }
+
+
         public async Task<IActionResult> UserList(int page = 1)
         {
             var users = await _user.GetAllAsync();
@@ -136,6 +171,8 @@ namespace MysteriousEncyclopedia.Controllers
             }
             return RedirectToAction("UserList");
         }
+
+
 
     }
 }
