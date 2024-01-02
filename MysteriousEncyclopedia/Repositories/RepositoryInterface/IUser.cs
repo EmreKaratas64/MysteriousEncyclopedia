@@ -8,5 +8,7 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryInterface
         Task<List<RoleDto>> GetAllRolesAsync();
 
         void RemoveUserFromRoleAsync(string userId, string roleId);
+
+        Task<bool> CheckEmailConfirmToken(string username, string code);
     }
 }

@@ -15,6 +15,19 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryClass
             _context = context;
         }
 
+        public async Task<bool> CheckEmailConfirmToken(string username, string code)
+        {
+            string query = "select CAST(CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END AS BIT) from AspNetUsers where UserName=@username and PhoneNumber=@mailConfirm";
+            var parameters = new DynamicParameters();
+            parameters.Add("@username", username);
+            parameters.Add("@mailConfirm", code);
+            using (var connection = _context.CreateConnection())
+            {
+                bool existss = await connection.ExecuteScalarAsync<bool>(query, parameters);
+                return existss;
+            }
+        }
+
         public void CreateAsync(UserDto entity)
         {
             throw new NotImplementedException();

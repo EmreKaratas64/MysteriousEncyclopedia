@@ -23,6 +23,9 @@ namespace MysteriousEncyclopedia.Controllers
             _user = user;
         }
 
+        MailService ms = new MailService();
+        Random random = new Random();
+
         [HttpGet]
         public IActionResult SignUp()
         {
@@ -37,16 +40,19 @@ namespace MysteriousEncyclopedia.Controllers
                 var IsExist = await _userManager.FindByNameAsync(signUpDto.username);
                 if (IsExist != null)
                     ModelState.AddModelError("", "Username is already taken");
+
                 IdentityUser user = new IdentityUser()
                 {
                     UserName = signUpDto.username,
                     Email = signUpDto.email,
+                    PhoneNumber = random.NextInt64(100000, 1000000).ToString()
                 };
                 var result = await _userManager.CreateAsync(user, signUpDto.password);
                 if (result.Succeeded)
                 {
+                    ms.SendMail("Mysterious Encyclopedia - Account Register", "Hello\nThank you for registering the Mysterious Encyclopedia\n Here is your confirmation code: " + user.PhoneNumber, "emrekaratas076@gmail.com", user.Email);
                     await _userManager.AddToRoleAsync(user, "User");
-                    return RedirectToAction("SignIn");
+                    return RedirectToAction("MailConfirm");
                 }
                 else
                 {
@@ -124,6 +130,87 @@ namespace MysteriousEncyclopedia.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("SignIn");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> MailConfirm()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> MailConfirm(EmailConfirm emailConfirm)
+        {
+            if (ModelState.IsValid)
+            {
+                bool Result = await _user.CheckEmailConfirmToken(emailConfirm.userName, emailConfirm.confirmationCode);
+                if (Result == true)
+                {
+                    var theUser = await _userManager.FindByNameAsync(emailConfirm.userName);
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(theUser);
+                    await _userManager.ConfirmEmailAsync(theUser, token);
+                    return RedirectToAction("SignIn");
+                }
+                ModelState.AddModelError("", "User is not found with this code!");
+            }
+            return View(emailConfirm);
+        }
+
+        [HttpGet]
+        public IActionResult PasswordReset()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PasswordReset(PasswordReset passwordReset)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(passwordReset.email);
+                if (user == null)
+                {
+                    ModelState.AddModelError("", "User not found!");
+                    return View(passwordReset);
+                }
+                string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var resetUrl = Url.Action("PasswordRecover", "Account", new { userid = user.Id, code = resetToken }, protocol: HttpContext.Request.Scheme);
+                ms.SendMail("Mysterious Encyclopedia - Password Reset", $"Hello\nYou can reset your password by clicking the below link\n{resetUrl}", "emrekaratas076@gmail.com", passwordReset.email);
+                ModelState.AddModelError("", "Your password recovery link is sent, please check your email");
+            }
+            return View(passwordReset);
+        }
+
+        [HttpGet]
+        public IActionResult PasswordRecover(string userid, string code)
+        {
+            TempData["userid"] = userid;
+            TempData["token"] = code;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PasswordRecover(PasswordRecover passwordRecover)
+        {
+            var userid = TempData["userid"];
+            var token = TempData["token"];
+
+            if (ModelState.IsValid)
+            {
+                if (userid == null || token == null)
+                    ModelState.AddModelError("", "Credentials are not valid!");
+                else
+                {
+                    var user = await _userManager.FindByIdAsync(userid.ToString());
+                    var result = await _userManager.ResetPasswordAsync(user, token.ToString(), passwordRecover.password);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("SignIn");
+                    }
+                }
+            }
+            return View(passwordRecover);
+        }
+
 
 
         public async Task<IActionResult> UserList(int page = 1)

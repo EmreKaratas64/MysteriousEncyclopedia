@@ -18,7 +18,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     options.Lockout.MaxFailedAccessAttempts = 3;
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-    //options.SignIn.RequireConfirmedEmail = true;
+    options.SignIn.RequireConfirmedEmail = true;
     options.User.RequireUniqueEmail = true;
 }).AddDapperStores(options =>
 {
