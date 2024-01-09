@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MysteriousEncyclopedia.Models.DTOs.Request;
 using MysteriousEncyclopedia.Repositories.RepositoryInterface;
@@ -21,12 +22,14 @@ namespace MysteriousEncyclopedia.Controllers
             _comment = comment;
         }
 
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> ListContacts(int page = 1)
         {
             var contacts = await _contact.GetAllAsync();
             return View(contacts.ToPagedList(page, 10));
         }
 
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteContact(int id)
         {
             var contact = await _contact.GetItemAsync(id);
@@ -36,6 +39,7 @@ namespace MysteriousEncyclopedia.Controllers
             return RedirectToAction("ListContacts");
         }
 
+        [Authorize(Roles = "User")]
         [HttpGet]
         public async Task<IActionResult> MakeRequest(int Id)
         {
@@ -45,6 +49,7 @@ namespace MysteriousEncyclopedia.Controllers
             return View(requestDto);
         }
 
+        [Authorize(Roles = "User")]
         [HttpPost]
         public async Task<IActionResult> MakeRequest(RequestDto requestDto)
         {
@@ -62,12 +67,14 @@ namespace MysteriousEncyclopedia.Controllers
             return View(requestDto);
         }
 
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> RequestList(int page = 1)
         {
             var requests = await _request.GetAllAsync();
             return View(requests.ToPagedList(page, 10));
         }
 
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> RequestDetail(int id)
         {
             var requestt = await _request.GetItemAsync(id);
@@ -75,6 +82,7 @@ namespace MysteriousEncyclopedia.Controllers
             return View(requestt);
         }
 
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteRequest(int Id)
         {
             var requestt = await _request.GetItemAsync(Id);
@@ -83,6 +91,7 @@ namespace MysteriousEncyclopedia.Controllers
             return RedirectToAction("RequestList");
         }
 
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> ApproveRequest(int id)
         {
             var requestt = await _request.GetItemAsync(id);
@@ -92,6 +101,7 @@ namespace MysteriousEncyclopedia.Controllers
             return RedirectToAction("RequestList");
         }
 
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> CancelRequest(int id)
         {
             var requestt = await _request.GetItemAsync(id);
@@ -101,12 +111,14 @@ namespace MysteriousEncyclopedia.Controllers
             return RedirectToAction("RequestList");
         }
 
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> ListComments(int page = 1)
         {
             var comments = await _comment.GetAllAsync();
             return View(comments.ToPagedList(page, 10));
         }
 
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> CommentDetail(int id)
         {
             var comment = await _comment.GetItemAsync(id);
@@ -114,6 +126,7 @@ namespace MysteriousEncyclopedia.Controllers
             return View(comment);
         }
 
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteComment(int id)
         {
             var comment = await _comment.GetItemAsync(id);
@@ -122,6 +135,7 @@ namespace MysteriousEncyclopedia.Controllers
             return RedirectToAction("ListComments");
         }
 
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> AcceptComment(int id)
         {
             var comment = await _comment.GetItemAsync(id);

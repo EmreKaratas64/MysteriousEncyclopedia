@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MysteriousEncyclopedia.Models.DTOs.ReferenceDto;
 using MysteriousEncyclopedia.Repositories.RepositoryInterface;
 using X.PagedList;
 
 namespace MysteriousEncyclopedia.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class ReferenceController : Controller
     {
         private readonly IResource _resource;

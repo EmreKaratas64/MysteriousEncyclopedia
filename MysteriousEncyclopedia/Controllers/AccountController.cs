@@ -8,7 +8,6 @@ using X.PagedList;
 
 namespace MysteriousEncyclopedia.Controllers
 {
-    [AllowAnonymous]
     [AutoValidateAntiforgeryToken]
     public class AccountController : Controller
     {
@@ -26,12 +25,14 @@ namespace MysteriousEncyclopedia.Controllers
         MailService ms = new MailService();
         Random random = new Random();
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult SignUp()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> SignUp(SignUpDto signUpDto)
         {
@@ -65,12 +66,14 @@ namespace MysteriousEncyclopedia.Controllers
             return View(signUpDto);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult SignIn()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> SignIn(SignInDto signInDto)
         {
@@ -97,12 +100,49 @@ namespace MysteriousEncyclopedia.Controllers
             return View(signInDto);
         }
 
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult AdminLogin()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> AdminLogin(SignInDto signInDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByNameAsync(signInDto.username);
+                if (user == null) return View(signInDto);
+                bool isUser = await _userManager.IsInRoleAsync(user, "User");
+                bool isAdmin = await _userManager.IsInRoleAsync(user, "Administrator");
+                if (isUser && isAdmin)
+                {
+                    var result = await _signInManager.PasswordSignInAsync(signInDto.username, signInDto.password, false, true);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("TopicList", "Topic");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Invalid login attempt!");
+                        return View(signInDto);
+                    }
+                }
+                ModelState.AddModelError("", "Your account might have been banned!");
+            }
+            return View(signInDto);
+        }
+
+        [Authorize(Roles = "User")]
         [HttpGet]
         public IActionResult Setting()
         {
             return View();
         }
 
+        [Authorize(Roles = "User")]
         [HttpPost]
         public async Task<IActionResult> Setting(UserSettingViewModel userSetting)
         {
@@ -125,18 +165,21 @@ namespace MysteriousEncyclopedia.Controllers
             return View(userSetting);
         }
 
+
         public async Task<IActionResult> SignOut()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("SignIn");
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> MailConfirm()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> MailConfirm(EmailConfirm emailConfirm)
         {
@@ -155,12 +198,14 @@ namespace MysteriousEncyclopedia.Controllers
             return View(emailConfirm);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult PasswordReset()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> PasswordReset(PasswordReset passwordReset)
         {
@@ -180,6 +225,7 @@ namespace MysteriousEncyclopedia.Controllers
             return View(passwordReset);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult PasswordRecover(string userid, string code)
         {
@@ -188,6 +234,7 @@ namespace MysteriousEncyclopedia.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> PasswordRecover(PasswordRecover passwordRecover)
         {
@@ -212,13 +259,14 @@ namespace MysteriousEncyclopedia.Controllers
         }
 
 
-
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> UserList(int page = 1)
         {
             var users = await _user.GetAllAsync();
             return View(users.ToPagedList(page, 10));
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public async Task<IActionResult> UserRoles(string id)
         {
@@ -243,6 +291,7 @@ namespace MysteriousEncyclopedia.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public async Task<IActionResult> UserRoles(List<AssignRoleViewModel> assignRole)
         {

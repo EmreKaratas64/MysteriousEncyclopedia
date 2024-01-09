@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MysteriousEncyclopedia.Models;
@@ -9,6 +10,7 @@ using X.PagedList;
 
 namespace MysteriousEncyclopedia.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -93,6 +95,36 @@ namespace MysteriousEncyclopedia.Controllers
             }
             TempData["ContactFail"] = "Sorry, your message could not be sent :(";
             return View(contact);
+        }
+
+        public IActionResult ErrorPage(string code)
+        {
+            if (code == "404")
+            {
+                ViewBag.codee = "404 - Not Found";
+                ViewBag.codeMess = "Sorry, we couldn't find the page you are looking!";
+            }
+
+            else if (code == "304")
+            {
+                ViewBag.codee = "304 - Not Modified";
+                ViewBag.codeMess = "The content is not modified!";
+            }
+            else if (code == "400")
+            {
+                ViewBag.codee = "400 - Bad Request";
+                ViewBag.codeMess = "The request is not valid!";
+            }
+            else if (code == "401" || code == "403")
+                ViewBag.codeMess = "The Content is forbidden or you're not allowed to view!";
+            else
+                ViewBag.codeMess = "Sorry, Something went wrong!";
+            return View();
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

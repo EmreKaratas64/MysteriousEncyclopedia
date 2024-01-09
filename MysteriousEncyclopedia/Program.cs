@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using MysteriousEncyclopedia.Models.DapperContext;
 using MysteriousEncyclopedia.Repositories.RepositoryClass;
 using MysteriousEncyclopedia.Repositories.RepositoryInterface;
@@ -29,6 +31,13 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddMvc(config =>
+{
+    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+    config.Filters.Add(new AuthorizeFilter(policy));
+});
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     // cookie settings
@@ -49,7 +58,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-app.UseStatusCodePagesWithReExecute("/Home/Error404/", "?code={0}");
+app.UseStatusCodePagesWithReExecute("/Home/ErrorPage/", "?code={0}");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();

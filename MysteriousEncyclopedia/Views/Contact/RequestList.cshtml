@@ -24,6 +24,7 @@
                             <tr>
                                 <th>Username</th>
                                 <th>Date</th>
+                                <th>Status</th>
                                 <th>Details</th>
                                 <th>Delete</th>
                                 <th>Cancel</th>
@@ -36,6 +37,7 @@
                                 <tr>
                                     <td>@item.UserName</td>
                                     <td>@item.RequestDate.ToShortDateString()</td>
+                                    <td>@item.RequestStatus</td>
                                     <td><a href="/Contact/RequestDetail/@item.RequestID" class="btn btn-outline-dark btn-rounded btn-fw">Details</a></td>
                                     <td><a href="/Contact/DeleteRequest/@item.RequestID" class="btn btn-outline-danger btn-rounded btn-fw">Delete</a></td>
                                     @if(item.RequestStatus == "pending")
