@@ -122,7 +122,7 @@ namespace MysteriousEncyclopedia.Controllers
                     var result = await _signInManager.PasswordSignInAsync(signInDto.username, signInDto.password, false, true);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("TopicList", "Topic");
+                        return Redirect("https://localhost:44367/evettopics");
                     }
                     else
                     {
@@ -169,7 +169,7 @@ namespace MysteriousEncyclopedia.Controllers
         public async Task<IActionResult> SignOut()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("SignIn");
+            return Redirect("https://localhost:44367/login");
         }
 
         [AllowAnonymous]

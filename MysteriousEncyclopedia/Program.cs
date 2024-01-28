@@ -58,7 +58,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-app.UseStatusCodePagesWithReExecute("/Home/ErrorPage/", "?code={0}");
+//app.UseStatusCodePagesWithReExecute("/Home/ErrorPage/", "?code={0}");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
@@ -68,5 +68,101 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=HomePage}/{id?}");
+
+app.MapControllerRoute(
+    name: "login",
+    pattern: "login",
+    defaults: new { controller = "Account", action = "SignIn" }
+    );
+
+app.MapControllerRoute(
+    name: "register",
+    pattern: "register",
+    defaults: new { controller = "Account", action = "SignUp" }
+    );
+
+
+app.MapControllerRoute(
+    name: "register",
+    pattern: "adminlogin",
+    defaults: new { controller = "Account", action = "AdminLogin" }
+    );
+
+
+app.MapControllerRoute(
+    name: "setting",
+    pattern: "usersetting",
+    defaults: new { controller = "Account", action = "Setting" }
+    );
+
+app.MapControllerRoute(
+    name: "logout",
+    pattern: "logout",
+    defaults: new { controller = "Account", action = "SignOut" }
+    );
+
+app.MapControllerRoute(
+    name: "mail",
+    pattern: "mailverify",
+    defaults: new { controller = "Account", action = "MailConfirm" }
+    );
+
+app.MapControllerRoute(
+    name: "pass",
+    pattern: "passwordrecovery",
+    defaults: new { controller = "Account", action = "PasswordReset" }
+    );
+
+// PasswordRecover fonksiyonunun routing'i Controller da yapýldý
+app.MapControllerRoute(
+    name: "pass",
+    pattern: "newpassword",
+    defaults: new { controller = "Account", action = "PasswordRecover" }
+    );
+
+
+
+app.MapControllerRoute(
+    name: "users",
+    pattern: "showusers/{id?}",
+    defaults: new { controller = "Account", action = "UserList" }
+    );
+
+app.MapControllerRoute(
+    name: "users",
+    pattern: "showuserroles/{id?}",
+    defaults: new { controller = "Account", action = "UserRoles" }
+    );
+
+
+app.MapControllerRoute(
+    name: "home",
+    pattern: "home",
+    defaults: new { controller = "Home", action = "HomePage" }
+    );
+
+app.MapControllerRoute(
+    name: "contact",
+    pattern: "contactus",
+    defaults: new { controller = "Home", action = "HomeContact" }
+    );
+
+app.MapControllerRoute(
+    name: "events",
+    pattern: "mysteriousevents",
+    defaults: new { controller = "Home", action = "HomeMysteriousEventList" }
+    );
+
+
+app.MapControllerRoute(
+    name: "events",
+    pattern: "evettopics",
+    defaults: new { controller = "Topic", action = "TopicList" }
+    );
+
+
+
+
+
 
 app.Run();
