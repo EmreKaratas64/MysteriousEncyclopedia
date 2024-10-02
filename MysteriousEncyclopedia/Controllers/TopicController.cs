@@ -46,7 +46,7 @@ namespace MysteriousEncyclopedia.Controllers
             var result = await _topic.GetItemAsync(id);
             if (result != null)
                 return View(result);
-            return View();
+            return RedirectToAction("TopicList");
         }
 
         [HttpPost]

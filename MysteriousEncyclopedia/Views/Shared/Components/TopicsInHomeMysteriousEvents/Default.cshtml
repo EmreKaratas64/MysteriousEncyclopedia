@@ -7,7 +7,7 @@
             @foreach (var item in Model)
             {
                 <li class="mb-3 d-flex justify-content-between align-items-center">
-                    <a class="text-dark" href="/Home/HomeMysteriousEventsByTopic?topic=@item.Item1">
+                    <a class="text-dark" href="/events?topic=@item.Item1">
                         <i class="fa fa-angle-right text-primary mr-2"></i>@item.Item1
                     </a>
                     <span class="badge badge-primary badge-pill">@item.Item2</span>

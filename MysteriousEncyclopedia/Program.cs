@@ -43,8 +43,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     // cookie settings
     options.Cookie.HttpOnly = true;
     options.ExpireTimeSpan = TimeSpan.FromDays(1);
-    options.AccessDeniedPath = new PathString("/Home/AccessDenied/");
-    options.LoginPath = "/Account/SignIn/";
+    options.AccessDeniedPath = new PathString("/notallowed");
+    options.LoginPath = "/login";
     options.SlidingExpiration = true;
 });
 
@@ -54,11 +54,11 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/exception");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-//app.UseStatusCodePagesWithReExecute("/Home/ErrorPage/", "?code={0}");
+app.UseStatusCodePagesWithReExecute("/error", "?code={0}");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
@@ -153,16 +153,179 @@ app.MapControllerRoute(
     defaults: new { controller = "Home", action = "HomeMysteriousEventList" }
     );
 
+app.MapControllerRoute(
+    name: "eventsbytopic",
+    pattern: "events/{topic?}",
+    defaults: new { controller = "Home", action = "HomeMysteriousEventsByTopic" }
+    );
 
 app.MapControllerRoute(
-    name: "events",
-    pattern: "evettopics",
+    name: "eventdetails",
+    pattern: "eventdetails/{id?}",
+    defaults: new { controller = "Home", action = "HomeMysteriousEventDetail" }
+    );
+
+app.MapControllerRoute(
+    name: "homeeventresources",
+pattern: "resources",
+    defaults: new { controller = "Home", action = "HomeResources" }
+);
+
+
+app.MapControllerRoute(
+    name: "errorpage",
+    pattern: "error/{code?}",
+    defaults: new { controller = "Home", action = "ErrorPage" }
+    );
+
+app.MapControllerRoute(
+    name: "error",
+    pattern: "exception",
+    defaults: new { controller = "Home", action = "Error" }
+    );
+
+app.MapControllerRoute(
+    name: "accessdenied",
+    pattern: "notallowed",
+    defaults: new { controller = "Home", action = "AccessDenied" }
+    );
+
+app.MapControllerRoute(
+    name: "contact",
+    pattern: "contacts",
+    defaults: new { controller = "Contact", action = "ListContacts" }
+    );
+
+app.MapControllerRoute(
+    name: "contact",
+    pattern: "removecont/{id?}",
+    defaults: new { controller = "Contact", action = "DeleteContact" }
+    );
+
+app.MapControllerRoute(
+    name: "contact",
+    pattern: "newrequest/{Id?}",
+    defaults: new { controller = "Contact", action = "MakeRequest" }
+    );
+
+app.MapControllerRoute(
+    name: "contact",
+    pattern: "requests",
+    defaults: new { controller = "Contact", action = "RequestList" }
+    );
+
+app.MapControllerRoute(
+    name: "contact",
+    pattern: "showrequest/{id?}",
+    defaults: new { controller = "Contact", action = "RequestDetail" }
+    );
+
+app.MapControllerRoute(
+    name: "contact",
+    pattern: "removereq/{Id?}",
+    defaults: new { controller = "Contact", action = "DeleteRequest" }
+    );
+
+app.MapControllerRoute(
+    name: "contact",
+    pattern: "requestapproval/{id?}",
+    defaults: new { controller = "Contact", action = "ApproveRequest" }
+    );
+
+app.MapControllerRoute(
+    name: "contact",
+    pattern: "requestcancel/{id?}",
+    defaults: new { controller = "Contact", action = "CancelRequest" }
+    );
+
+app.MapControllerRoute(
+    name: "contact",
+    pattern: "comments",
+    defaults: new { controller = "Contact", action = "ListComments" }
+    );
+
+app.MapControllerRoute(
+    name: "contact",
+    pattern: "showcomment/{id?}",
+    defaults: new { controller = "Contact", action = "CommentDetail" }
+    );
+
+app.MapControllerRoute(
+    name: "contact",
+    pattern: "remcomment/{id?}",
+    defaults: new { controller = "Contact", action = "DeleteComment" }
+    );
+
+app.MapControllerRoute(
+    name: "contact",
+    pattern: "commentacceptence/{id?}",
+    defaults: new { controller = "Contact", action = "AcceptComment" }
+    );
+
+app.MapControllerRoute(
+    name: "mysteriousevent",
+    pattern: "showmysteriousevents",
+    defaults: new { controller = "MysteriousEvent", action = "MysteriousEventList" }
+    );
+
+app.MapControllerRoute(
+    name: "mysteriousevent",
+    pattern: "eventsources/{id?}",
+    defaults: new { controller = "MysteriousEvent", action = "ResourcesByEventID" }
+    );
+
+app.MapControllerRoute(
+    name: "mysteriousevent",
+    pattern: "newresource/{id?}",
+    defaults: new { controller = "MysteriousEvent", action = "AddResourceToEvent" }
+    );
+
+app.MapControllerRoute(
+    name: "mysteriousevent",
+    pattern: "newevent",
+    defaults: new { controller = "MysteriousEvent", action = "MysteriousEventAdd" }
+    );
+
+app.MapControllerRoute(
+    name: "mysteriousevent",
+    pattern: "editevent/{id?}",
+    defaults: new { controller = "MysteriousEvent", action = "MysteriousEventUpdate" }
+    );
+
+app.MapControllerRoute(
+    name: "reference",
+    pattern: "references",
+    defaults: new { controller = "Reference", action = "ReferencesList" }
+    );
+
+app.MapControllerRoute(
+    name: "reference",
+    pattern: "newreference",
+    defaults: new { controller = "Reference", action = "AddReference" }
+    );
+
+app.MapControllerRoute(
+    name: "reference",
+    pattern: "editref/{id?}",
+    defaults: new { controller = "Reference", action = "UpdateReference" }
+    );
+
+app.MapControllerRoute(
+    name: "topic",
+    pattern: "eventtopics",
     defaults: new { controller = "Topic", action = "TopicList" }
     );
 
+app.MapControllerRoute(
+    name: "topic",
+    pattern: "newtopic",
+    defaults: new { controller = "Topic", action = "TopicAdd" }
+    );
 
-
-
-
+app.MapControllerRoute(
+    name: "topic",
+    pattern: "edittopic/{id?}",
+    defaults: new { controller = "Topic", action = "TopicUpdate" }
+    );
 
 app.Run();

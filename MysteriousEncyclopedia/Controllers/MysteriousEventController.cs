@@ -90,7 +90,7 @@ namespace MysteriousEncyclopedia.Controllers
             var mystery = await _mysteriousEvent.GetItemAsync(id);
             if (mystery != null)
                 return View(mystery);
-            return View();
+            return RedirectToAction("MysteriousEventList");
         }
 
         [HttpPost]

@@ -48,11 +48,11 @@
                         <div class="d-flex flex-wrap m-n1">
                             @foreach (var topic in topicsList)
                             {
-                                <a href="/Home/HomeMysteriousEventsByTopic?topic=@topic" class="btn btn-dark m-1">@topic</a>
+                                <a href="/events?topic=@topic" class="btn btn-dark m-1">@topic</a>
                             }
                         </div>
                         <br />
-                        <a href="/Contact/MakeRequest/@Model.EventID" class="btn btn-info px-md-5 mt-2">Request</a>
+                        <a href="/newrequest/@Model.EventID" class="btn btn-info px-md-5 mt-2">Request</a>
                     </div>
                 </div>
                 <!-- Blog Detail End -->

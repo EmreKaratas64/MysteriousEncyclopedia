@@ -3,7 +3,7 @@
     <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Last Added Events</h4>
     @foreach (var item in Model)
     {
-        <a class="d-flex align-items-center text-decoration-none bg-white mb-3" href="/Home/HomeMysteriousEventDetail/@item.EventID" style="border-radius:20px;">
+        <a class="d-flex align-items-center text-decoration-none bg-white mb-3" href="/eventdetails/@item.EventID" style="border-radius:20px;">
             <img class="img-top" src="@item.EventImage" alt="" style="height:95px;border-radius:20px">
             <div class="pl-2">
                 <h6 class="my-1 mr-1">@item.EventTitle</h6>
