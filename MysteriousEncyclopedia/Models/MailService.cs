@@ -24,7 +24,7 @@ namespace MysteriousEncyclopedia.Models
 
             SmtpClient client = new SmtpClient();
             client.Connect("smtp.gmail.com", 587, false);
-            client.Authenticate(senderMail, "vuxphewanjbojwnm"); // vuxp hewa njbo jwnm
+            client.Authenticate(senderMail, "mjdfvppfuqqpqnwc"); // mjdf vppf uqqp qnwc
             client.Send(mimeMessage);
             client.Disconnect(true);
         }

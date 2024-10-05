@@ -76,7 +76,7 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryClass
 
         public async Task<int> NumberOfCommentsByEventAsync(int id)
         {
-            string query = "Select Count(*) from Comment where MysteryID=@id";
+            string query = "Select Count(*) from Comment where MysteryID=@id and CommentStatus=1";
             var parameters = new DynamicParameters();
             parameters.Add("@id", id);
             using (var connection = _context.CreateConnection())

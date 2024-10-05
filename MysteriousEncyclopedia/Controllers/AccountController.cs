@@ -122,7 +122,7 @@ namespace MysteriousEncyclopedia.Controllers
                     var result = await _signInManager.PasswordSignInAsync(signInDto.username, signInDto.password, false, true);
                     if (result.Succeeded)
                     {
-                        return Redirect("https://localhost:44367/evettopics");
+                        return Redirect("https://localhost:44367/eventtopics");
                     }
                     else
                     {
