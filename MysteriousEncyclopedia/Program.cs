@@ -160,6 +160,12 @@ app.MapControllerRoute(
     );
 
 app.MapControllerRoute(
+    name: "eventssearch",
+pattern: "searchevent",
+    defaults: new { controller = "Home", action = "HomeMysteriousEventsSearch" }
+);
+
+app.MapControllerRoute(
     name: "eventdetails",
     pattern: "eventdetails/{id?}",
     defaults: new { controller = "Home", action = "HomeMysteriousEventDetail" }

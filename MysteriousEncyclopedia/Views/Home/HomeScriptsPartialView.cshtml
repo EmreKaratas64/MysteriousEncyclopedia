@@ -9,3 +9,13 @@
 
 <!-- Template Javascript -->
 <script src="~/HomeTheme/js/main.js"></script>
+
+<script>
+
+    var btngetlist = document.getElementById('btngetlist');
+    btngetlist.addEventListener("click", function () {
+        var eventName = document.getElementById('eventname').value;
+        window.location = "https://localhost:44367/searchevent?eventName=" + eventName;
+    });
+
+</script>

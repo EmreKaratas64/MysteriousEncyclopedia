@@ -44,11 +44,11 @@
                                     {
                                         <td><lable class="badge badge-warning p-2 rounded">Pending</lable></td>
                                     }
-                                    <td><a href="/Contact/CommentDetail/@item.CommentID" class="btn btn-outline-dark btn-rounded btn-fw">Details</a></td>
-                                    <td><a href="/Contact/DeleteComment/@item.CommentID" class="btn btn-outline-danger btn-rounded btn-fw">Delete</a></td>
+                                    <td><a href="/showcomment/@item.CommentID" class="btn btn-outline-dark btn-rounded btn-fw">Details</a></td>
+                                    <td><a href="/remcomment/@item.CommentID" class="btn btn-outline-danger btn-rounded btn-fw">Delete</a></td>
                                     @if (item.CommentStatus == false)
                                     {
-                                        <td><a href="/Contact/AcceptComment/@item.CommentID" class="btn btn-outline-info btn-rounded btn-fw">Approve</a></td>
+                                        <td><a href="/commentacceptence/@item.CommentID" class="btn btn-outline-info btn-rounded btn-fw">Approve</a></td>
                                     }
                                 </tr>
                             }

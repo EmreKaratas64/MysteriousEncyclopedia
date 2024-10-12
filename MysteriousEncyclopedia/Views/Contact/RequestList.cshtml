@@ -38,13 +38,13 @@
                                     <td>@item.UserName</td>
                                     <td>@item.RequestDate.ToShortDateString()</td>
                                     <td>@item.RequestStatus</td>
-                                    <td><a href="/Contact/RequestDetail/@item.RequestID" class="btn btn-outline-dark btn-rounded btn-fw">Details</a></td>
-                                    <td><a href="/Contact/DeleteRequest/@item.RequestID" class="btn btn-outline-danger btn-rounded btn-fw">Delete</a></td>
+                                    <td><a href="/showrequest/@item.RequestID" class="btn btn-outline-dark btn-rounded btn-fw">Details</a></td>
+                                    <td><a href="/removereq/@item.RequestID" class="btn btn-outline-danger btn-rounded btn-fw">Delete</a></td>
                                     @if(item.RequestStatus == "pending")
                                     {
-                                        <td><a href="/Contact/CancelRequest/@item.RequestID" class="btn btn-outline-danger btn-rounded btn-fw">Cancel</a></td>
+                                        <td><a href="/requestcancel/@item.RequestID" class="btn btn-outline-danger btn-rounded btn-fw">Cancel</a></td>
 
-                                        <td><a href="/Contact/ApproveRequest/@item.RequestID" class="btn btn-outline-info btn-rounded btn-fw">Approve</a></td>
+                                        <td><a href="/requestapproval/@item.RequestID" class="btn btn-outline-info btn-rounded btn-fw">Approve</a></td>
                                     }
                                 </tr>
                             }

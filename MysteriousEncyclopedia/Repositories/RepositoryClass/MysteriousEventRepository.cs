@@ -118,5 +118,17 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryClass
                 return values;
             }
         }
+
+        public async Task<List<MysteriousEventDto>> GetVisibleEventsByName(string eventName)
+        {
+            string query = "SELECT * FROM MysteriousEvent WHERE EventVisible=1 and EventTitle Like '%'+@eventName+'%' Order by EventID desc";
+            var parameters = new DynamicParameters();
+            parameters.Add("@eventName", eventName);
+            using (var connection = _context.CreateConnection())
+            {
+                var values = await connection.QueryAsync<MysteriousEventDto>(query, parameters);
+                return values.ToList();
+            }
+        }
     }
 }

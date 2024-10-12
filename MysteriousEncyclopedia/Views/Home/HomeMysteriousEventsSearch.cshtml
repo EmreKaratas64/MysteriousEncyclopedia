@@ -1,0 +1,84 @@
+﻿@model List<MysteriousEventDto>
+@{
+    ViewData["Title"] = "Mysterious Events Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Header Start -->
+<div class="container-fluid page-header">
+    <div class="container">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
+            <h3 class="display-4 text-white text-uppercase">Events Search</h3>
+            <div class="d-inline-flex text-white">
+                <p class="m-0 text-uppercase"><a class="text-white" href="/home">Home</a></p>
+                <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                <p class="m-0 text-uppercase">Search</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+<!-- Booking Start -->
+<div class="container-fluid booking mt-5 pb-5">
+    <div class="container pb-5">
+        <div class="bg-light shadow" style="padding: 30px;">
+            <div class="row align-items-center" style="min-height: 60px;">
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3 mb-md-0">
+                                <div class="date" id="date2" data-target-input="nearest">
+                                    <input id="eventname" type="text" class="form-control p-4 datetimepicker-input" placeholder="Event name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button id="btngetlist" class="btn btn-info btn-block" type="button" style="height: 47px; margin-top: -2px;">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Booking End -->
+<!-- Blog Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row pb-3">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-6 mb-4 pb-2">
+                            <div class="blog-item">
+                                <div class="position-relative">
+                                    <img class="img-fluid w-100" src="@item.EventImage" alt="" style="height:220px">
+                                    <div class="blog-date">
+                                        <h6 class="font-weight-bold mb-n1">@item.EventDate.Substring(Math.Max(0, item.EventDate.Length - 4))</h6>
+                                    </div>
+                                </div>
+                                <div class="bg-white p-4">
+                                    <a class="h5 m-0 text-decoration-none" href="/eventdetails/@item.EventID">@item.EventTitle</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="col-lg-4 mt-5 mt-lg-0">
+
+                <!-- Topic List -->
+                @await Component.InvokeAsync("TopicsInHomeMysteriousEvents")
+                <!-- Last Added Events -->
+                @await Component.InvokeAsync("LastAddedEventsInHomeMysteriousEvents")
+
+                <!-- Tag Cloud -->
+                @await Component.InvokeAsync("HomeTagsOnSidebar")
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Blog End -->
+

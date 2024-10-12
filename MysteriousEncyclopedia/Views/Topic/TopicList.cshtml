@@ -32,7 +32,7 @@
                                 <tr>
                                     <td>@item.TopicID</td>
                                     <td>@item.TopicName</td>
-                                    <td><a href="/Topic/TopicUpdate/@item.TopicID" class="btn btn-outline-info btn-rounded btn-fw">Edit</a></td>
+                                    <td><a href="/edittopic/@item.TopicID" class="btn btn-outline-info btn-rounded btn-fw">Edit</a></td>
                                 </tr>
                             }
                         </tbody>
@@ -44,7 +44,7 @@
                    LiElementClasses = new List<string> { "btn", "btn-primary"}
                })
                     <br />
-                    <a href="/Topic/TopicAdd/" class="btn btn-outline-primary btn-rounded btn-fw">Add New Topic</a>
+                    <a href="/newtopic/" class="btn btn-outline-primary btn-rounded btn-fw">Add New Topic</a>
                 </div>
             </div>
         </div>

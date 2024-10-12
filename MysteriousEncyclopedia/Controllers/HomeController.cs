@@ -48,6 +48,12 @@ namespace MysteriousEncyclopedia.Controllers
             return View(events.ToPagedList(page, 10));
         }
 
+        public async Task<IActionResult> HomeMysteriousEventsSearch(string eventName)
+        {
+            var searchedEvents = await _mysteriousEvent.GetVisibleEventsByName(eventName);
+            return View(searchedEvents);
+        }
+
         public async Task<IActionResult> HomeMysteriousEventDetail(int id)
         {
             var mystery = await _mysteriousEvent.GetVisibleItemAsync(id);

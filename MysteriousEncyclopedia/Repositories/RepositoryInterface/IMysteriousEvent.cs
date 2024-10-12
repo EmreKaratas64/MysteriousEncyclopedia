@@ -11,5 +11,7 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryInterface
         Task<List<MysteriousEventDto>> GetVisibleLast6EventsAsync();
 
         Task<List<MysteriousEventDto>> GetVisibleEventsByTopicAsync(string topic);
+
+        Task<List<MysteriousEventDto>> GetVisibleEventsByName(string eventName);
     }
 }

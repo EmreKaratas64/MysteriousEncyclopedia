@@ -54,7 +54,7 @@ namespace MysteriousEncyclopedia.Repositories.RepositoryClass
 
         public async Task<List<ReferencesDto>> GetAllAsync()
         {
-            string query = "Select * from Reference";
+            string query = "Select * from Reference Order By ReferenceID desc";
             using (var connection = _context.CreateConnection())
             {
                 var values = await connection.QueryAsync<ReferencesDto>(query);
